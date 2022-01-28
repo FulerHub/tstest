@@ -1,25 +1,29 @@
-import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import { Layout} from 'antd';
+import 'antd/dist/antd.min.css';
+import {Route, Routes} from "react-router-dom";
+import Home from "./pages/Home";
+import Page from "./pages/Page";
+import PageNotFound from "./pages/404";
+import {FC} from "react";
+const { Header, Footer } = Layout;
 
-function App() {
+const App:FC = ()=> {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+      <Layout className="layout">
+        <Header style={{color:"#fff"}}>
+          Announcements
+        </Header>
+        HOME
+        <Routes>
+          <Route path="/" element={ <Home />} />
+          <Route path="page" element={<Page />}>
+            <Route path=":postID" element={<Page />} />
+          </Route>
+          <Route path="*" element={ <PageNotFound/> }/>
+        </Routes>
+        <Footer style={{ textAlign: 'center' }}>for NerdySoft</Footer>
+      </Layout>
   );
 }
 
