@@ -2,11 +2,13 @@ import React, {FC} from 'react';
 import {useSelector} from "react-redux";
 import {Card} from "antd";
 import moment from "moment";
+import {getPosts} from "../redux/selectors";
 
 interface IPost {
     id: number,
     title: string,
-    description: string
+    description: string,
+    date: number
 }
 
 interface PropsType {
@@ -23,8 +25,8 @@ const SimilarPosts:FC<PropsType> = (props) => {
         }
     }
     let numPost = 0;
-    const posts = useSelector((state:any) => state.annReducer.posts)
-    const postClose = posts.filter(function (item:any) {
+    const posts = useSelector(getPosts)
+    const postClose = posts.filter(function (item:IPost) {
         if( (item.id !== props.post.id && numPost < 3  && (getSimilarPost(item.description,props.post.description) || getSimilarPost(item.title,props.post.title)))){
             numPost++
             return true;
@@ -35,7 +37,7 @@ const SimilarPosts:FC<PropsType> = (props) => {
             <h2>Similar posts</h2>
             {postClose.length > 0 ?
                 <div className="similar">
-                    {postClose.map((item:any) =><Card key={item.id} title={item.title} bordered={false} style={{ width: 250 }}><p>{moment(item.date).format('DD.MM.YYYY h:mm:ss')}</p></Card>)}
+                    {postClose.map((item:IPost) =><Card key={item.id} title={item.title} bordered={false} style={{ width: 250 }}><p>{moment(item.date).format('DD.MM.YYYY h:mm:ss')}</p></Card>)}
                 </div>
                 :
                 "Not have Similar"

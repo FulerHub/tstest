@@ -4,11 +4,12 @@ import {useDispatch, useSelector} from "react-redux";
 import {Link} from "react-router-dom";
 import moment from "moment";
 import {actionSearchPosts} from "../redux/reducers/annReducer";
+import {getSearchPosts} from "../redux/selectors";
 const {Search} = Input;
 
 const ListAnnouncement:FC = () => {
     const dispatch = useDispatch();
-    const postsSearch = useSelector((state:any) => state.annReducer.searchPosts)
+    const postsSearch = useSelector(getSearchPosts)
 
     useEffect(()=>{
         dispatch(actionSearchPosts(''))
